@@ -27,6 +27,17 @@ buildDiscarder(logRotator(numToKeepStr: '10'))
                 sh 'npm run build'
             }
         }
+
+        stage('Unit Tests') {
+            steps {
+                sh 'npm test'
+            }
+            post {
+                always {
+                     archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
+                }
+            }
+        }
     }
 
     post {
