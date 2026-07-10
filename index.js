@@ -1,9 +1,7 @@
-// index.js
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Simple routes
 app.get('/', (req, res) => {
   res.send('<h1>Welcome to Jenkins CI/CD Demo App 🚀</h1><p>This app is running in your browser!</p>');
 });
@@ -20,9 +18,11 @@ app.get('/subtract/:a/:b', (req, res) => {
   res.send(`Result of ${a} - ${b} = ${a - b}`);
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`✅ App is running at http://localhost:${PORT}`);
-});
+// Only start the server if this file is run directly (not when imported by tests)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`✅ App is running at http://localhost:${PORT}`);
+  });
+}
 
 module.exports = app;

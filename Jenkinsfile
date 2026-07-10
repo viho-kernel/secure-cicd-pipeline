@@ -34,7 +34,8 @@ buildDiscarder(logRotator(numToKeepStr: '10'))
             }
             post {
                 always {
-                     archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
+                    // Archive coverage report so you can view it later
+                    archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true
                 }
             }
         }
