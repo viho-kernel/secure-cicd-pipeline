@@ -67,7 +67,7 @@ buildDiscarder(logRotator(numToKeepStr: '10'))
         stage('Read Version') {
             steps {
                 script {
-                    def packageJson = readJson file: 'package.json'
+                    def packageJson = readJSON file: 'package.json' 
                     env.APP_VERSION = packageJson.version
                     env.IMAGE_TAG = "${env.APP_VERSION}-${env.BUILD_NUMBER}"
                     echo "Version: ${env.APP_VERSION} | Image tag: ${env.IMAGE_TAG}"
