@@ -55,6 +55,20 @@ buildDiscarder(logRotator(numToKeepStr: '10'))
                 }
             }
         }
+
+        stage('Trivy Dockerfile Scan') {
+            steps {
+                echo 'Scanning Docker image for vulnerabilities...'
+                 sh 'trivy config --severity HIGH,CRITICAL --exit-code 1 .'
+
+            }
+        }
+
+        stage('Trivy Image Scan') {
+            steps {
+sh "trivy image --severity CRITICAL --exit-code 1 --format table ${env.APP_NAME}:${env.IMAGE_TAG}"
+            }
+        }
     }
 
     post {
