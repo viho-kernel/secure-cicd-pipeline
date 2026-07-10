@@ -64,6 +64,23 @@ buildDiscarder(logRotator(numToKeepStr: '10'))
             }
         }
 
+        stage('Read Version') {
+            steps {
+                script {
+                    def packageJson = readJson file: 'package.json'
+                    env.APP_VERSION = packageJson.version
+                    env.IMAGE_TAG = "${env.APP_VERSION}-${env.BUILD_NUMBER}"
+                    echo "Version: ${env.APP_VERSION} | Image tag: ${env.IMAGE_TAG}"
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${env.APP_NAME}:${env.IMAGE_TAG} ."
+            }
+        }
+
         stage('Trivy Image Scan') {
             steps {
 sh "trivy image --severity CRITICAL --exit-code 1 --format table ${env.APP_NAME}:${env.IMAGE_TAG}"
