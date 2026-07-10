@@ -1,0 +1,19 @@
+{
+  "name": "secure-cicd-pipeline",
+  "version": "1.0.0",
+  "description": "Secure CI/CD practice project",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest --coverage",
+    "build": "echo 'Build step complete'"
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": { "branches": 70, "functions": 70, "lines": 70, "statements": 70 }
+    }
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}
